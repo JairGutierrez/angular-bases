@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Character } from '../../interfaces/character.interface';
 
 @Component({
-  selector: 'dbz-add-charracter',
+  selector: 'dbz-add-character',
   templateUrl: './add-charracter.component.html',
   styleUrl: './add-charracter.component.css'
 })
 export class AddCharracterComponent {
 
+  @Output()
+  public onNewCharacter: EventEmitter<Character> = new EventEmitter();
+
+  public character: Character = {
+    name: '',
+    power: 0
+  };
+
+  emitCharacter(): void {
+    if (this.character.name.length === 0 ) return;
+    this.onNewCharacter.emit(this.character);
+    this.character = { name: '', power: 0 };
+  }
 }
